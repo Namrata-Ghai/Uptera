@@ -22,6 +22,23 @@
       --shadow: 0 14px 34px rgba(24, 24, 27, 0.07);
     }
 
+    .floating-email {
+    position: fixed;
+    bottom: 95px;
+    right: 25px;
+    background-color: #ea4335;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -1167,5 +1184,42 @@
       closeModal();
     }
   </script>
+
+  <!-- Floating Email Button -->
+<button type="button" onclick="copyEmail()" class="floating-email" title="Click to copy email" style="border:none;">
+  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" viewBox="0 0 16 16">
+    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+  </svg>
+</button>
+
+<!-- Notification Toast (Fixed with your real email) -->
+<div id="emailToast" style="display:none; position:fixed; bottom:165px; right:25px; background-color:#333; color:white; padding:10px 15px; border-radius:5px; font-size:14px; z-index:10000; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
+  Email Copied! Paste into your email app.
+</div>
+
+<script>
+  function copyEmail() {
+    navigator.clipboard.writeText("uptera.official@gmail.com").then(() => {
+      const toast = document.getElementById('emailToast');
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3000);
+    });
+  }
+</script>
+
+
+<!-- Notification Toast Pop-up (Must be included for the copy message to show!) -->
+<div id="emailToast" style="display:none; position:fixed; bottom:165px; right:25px; background-color:#333; color:white; padding:10px 15px; border-radius:5px; font-size:14px; z-index:1001; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
+    Email copied: uptera.official@gmail.com
+</div>
+
+
+<!-- Notification Toast Pop-up -->
+<div id="emailToast" style="display:none; position:fixed; bottom:165px; right:25px; background-color:#333; color:white; padding:10px 15px; border-radius:5px; font-size:14px; z-index:1001; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
+    Email copied: uptera.official@gmail.com
+</div>
+
 </body>
 </html>
