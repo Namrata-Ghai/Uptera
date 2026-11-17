@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Uptera — Diverting Delhi-NCR’s Household Surplus From Landfills</title>
+  <meta name="description" content="Uptera uses Vision AI and hyperlocal routing to divert wearable clothes, textbooks, and household goods from Delhi-NCR landfills to verified grassroots NGOs." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-paper: #FAF9F5;
+      --bg-sand: #F1EFE7;
+      --forest: #1A432B;
+      --forest-hover: #12301E;
+      --terracotta: #C25934;
+      --ink: #18181B;
+      --ink-muted: #52525B;
+      --white: #FFFFFF;
+      --border: #E4E2D8;
+      --shadow: 0 14px 34px rgba(24, 24, 27, 0.07);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-paper);
+      color: var(--ink);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .serif {
+      font-family: 'Fraunces', Georgia, serif;
+      letter-spacing: -0.02em;
+    }
+
+    /* Navigation */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 6%;
+      background: rgba(250, 249, 245, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-size: 27px;
+      font-weight: 700;
+      color: var(--forest);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--terracotta);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--terracotta);
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 26px;
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 26px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .btn-forest {
+      background: var(--forest);
+      color: var(--white);
+    }
+
+    .btn-forest:hover {
+      background: var(--forest-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--ink);
+    }
+
+    .btn-outline:hover {
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    /* Split Editorial Hero */
+    .hero {
+      padding: 64px 6% 84px;
+      max-width: 1320px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--terracotta);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 5vw, 60px);
+      line-height: 1.08;
+      margin-bottom: 22px;
+      color: var(--ink);
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--forest);
+    }
+
+    .hero-lead {
+      font-size: 18px;
+      color: var(--ink-muted);
+      margin-bottom: 34px;
+      max-width: 560px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .hero-footnote {
+      font-size: 13px;
+      color: var(--ink-muted);
+      border-left: 3px solid var(--terracotta);
+      padding-left: 14px;
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-main-img {
+      width: 100%;
+      height: 490px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      display: block;
+    }
+
+    .floating-caption {
+      position: absolute;
+      bottom: -22px;
+      left: -24px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 18px 22px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      max-width: 290px;
+    }
+
+    .floating-caption strong {
+      display: block;
+      font-size: 15px;
+      color: var(--forest);
+      margin-bottom: 4px;
+    }
+
+    .floating-caption span {
+      font-size: 13px;
+      color: var(--ink-muted);
+      line-height: 1.4;
+      display: block;
+    }
+
+    /* Data & Landfill Reality Section */
+    .reality-band {
+      background: #161817;
+      color: var(--bg-paper);
+      padding: 88px 6%;
+    }
+
+    .reality-inner {
+      max-width: 1260px;
+      margin: 0 auto;
+    }
+
+    .reality-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 54px;
+      align-items: center;
+      margin-bottom: 60px;
+    }
+
+    .reality-img-wrap {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .reality-img-wrap img {
+      width: 100%;
+      height: 390px;
+      object-fit: cover;
+      display: block;
+      filter: contrast(1.06);
+    }
+
+    .img-credit {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(0, 0, 0, 0.72);
+      color: #E4E4E7;
+      font-size: 12px;
+      padding: 5px 10px;
+      border-radius: 6px;
+    }
+
+    .reality-copy h2 {
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.15;
+      margin-bottom: 20px;
+      color: var(--white);
+    }
+
+    .reality-copy p {
+      color: #D4D4D8;
+      font-size: 16px;
+      margin-bottom: 18px;
+    }
+
+    .hard-numbers {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      padding-top: 44px;
+      border-top: 1px solid #2E3230;
+    }
+
+    .num-block h3 {
+      font-size: 38px;
+      color: #E07A5F;
+      margin-bottom: 6px;
+    }
+
+    .num-block p {
+      font-size: 14px;
+      color: #A1A1AA;
+      line-height: 1.5;
+    }
+
+    /* Purpose & Mission Section */
+    .section {
+      padding: 92px 6%;
+      max-width: 1260px;
+      margin: 0 auto;
+    }
+
+    .purpose-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    .purpose-sticky h2 {
+      font-size: clamp(30px, 4vw, 42px);
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+
+    .purpose-sticky p {
+      color: var(--ink-muted);
+      font-size: 16px;
+      margin-bottom: 24px;
+    }
+
+    .pillar-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .pillar-item {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 28px 30px;
+      border-radius: 12px;
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 20px;
+    }
+
+    .pillar-num {
+      font-family: 'Fraunces', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--terracotta);
+    }
+
+    .pillar-item h3 {
+      font-size: 21px;
+      margin-bottom: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+    }
+
+    .pillar-item p {
+      color: var(--ink-muted);
+      font-size: 15px;
+    }
+
+    /* Photo Story Gallery (What We Divert) */
+    .divert-section {
+      background: var(--bg-sand);
+      padding: 88px 6%;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .divert-inner {
+      max-width: 1260px;
+      margin: 0 auto;
+    }
+
+    .divert-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 44px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .divert-header h2 {
+      font-size: clamp(28px, 4vw, 40px);
+    }
+
+    .photo-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .photo-card {
+      background: var(--white);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-card-body {
+      padding: 24px;
+    }
+
+    .tag-pill {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--forest);
+      background: #E6F0EA;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .photo-card-body h3 {
+      font-size: 20px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .photo-card-body p {
+      font-size: 14px;
+      color: var(--ink-muted);
+    }
+
+    /* Interactive AI Photo Tool */
+    .scanner-box {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 44px;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 44px;
+      align-items: center;
+    }
+
+    .upload-zone {
+      border: 2px dashed #A1A1AA;
+      background: var(--bg-paper);
+      border-radius: 14px;
+      padding: 32px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .upload-zone:hover {
+      border-color: var(--forest);
+      background: #F2F7F4;
+    }
+
+    .preview-thumb {
+      max-width: 100%;
+      max-height: 180px;
+      border-radius: 10px;
+      margin: 0 auto 14px;
+      display: none;
+      object-fit: cover;
+    }
+
+    .preset-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .preset-chip {
+      background: var(--bg-sand);
+      border: 1px solid var(--border);
+      padding: 7px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .preset-chip.active, .preset-chip:hover {
+      background: var(--forest);
+      color: var(--white);
+      border-color: var(--forest);
+    }
+
+    .result-sheet {
+      background: var(--bg-paper);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+    }
+
+    .result-line {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    .result-line:last-of-type {
+      border-bottom: none;
+    }
+
+    .result-line span {
+      color: var(--ink-muted);
+    }
+
+    .result-line strong {
+      color: var(--ink);
+      text-align: right;
+    }
+
+    /* Pilot Transparency & Numbers */
+    .pilot-box {
+      background: var(--forest);
+      color: var(--white);
+      border-radius: 18px;
+      padding: 52px 44px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .pilot-box h2 {
+      font-size: clamp(28px, 3.5vw, 38px);
+      margin-bottom: 14px;
+    }
+
+    .pilot-box p {
+      color: #D1E2D7;
+      font-size: 16px;
+      margin-bottom: 24px;
+    }
+
+    .pilot-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .p-stat {
+      background: rgba(255, 255, 255, 0.09);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .p-stat strong {
+      display: block;
+      font-family: 'Fraunces', serif;
+      font-size: 30px;
+      color: #F4A261;
+    }
+
+    .p-stat span {
+      font-size: 13px;
+      color: #E4ECE7;
+    }
+
+    /* Partner Split */
+    .partner-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .p-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 36px;
+    }
+
+    .p-card h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .p-card p {
+      color: var(--ink-muted);
+      margin-bottom: 20px;
+      font-size: 15px;
+    }
+
+    .p-card ul {
+      list-style: none;
+      margin-bottom: 26px;
+    }
+
+    .p-card li {
+      padding: 7px 0;
+      font-size: 14px;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    /* Footer */
+    footer {
+      background: #161817;
+      color: #A1A1AA;
+      padding: 64px 6% 36px;
+    }
+
+    .footer-inner {
+      max-width: 1260px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid #27272A;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links div a {
+      display: block;
+      color: #D4D4D8;
+      text-decoration: none;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    .footer-bottom {
+      max-width: 1260px;
+      margin: 24px auto 0;
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* Modal */
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 2000;
+    }
+
+    .modal-bg.open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--white);
+      padding: 34px;
+      border-radius: 16px;
+      max-width: 460px;
+      width: 100%;
+      position: relative;
+    }
+
+    .modal-card input, .modal-card select, .modal-card textarea {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-top: 6px;
+      margin-bottom: 14px;
+      font-family: inherit;
+    }
+
+    /* WhatsApp Float */
+    .wa-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #1F8E47;
+      color: var(--white);
+      padding: 13px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    @media (max-width: 960px) {
+      .hero, .reality-grid, .purpose-grid, .scanner-box, .pilot-box, .partner-cards {
+        grid-template-columns: 1fr;
+      }
+      .hard-numbers {
+        grid-template-columns: 1fr 1fr;
+      }
+      .photo-cards {
+        grid-template-columns: 1fr;
+      }
+      .floating-caption {
+        position: static;
+        margin-top: 16px;
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 74px;
+        left: 0;
+        right: 0;
+        background: var(--bg-paper);
+        flex-direction: column;
+        padding: 24px;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-links.open { display: flex; }
+      .mobile-toggle { display: block; }
+      .hard-numbers { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#" class="logo">Uptera<span class="logo-dot"></span></a>
+    <div class="nav-links" id="navMenu">
+      <a href="#crisis">The Landfill Crisis</a>
+      <a href="#purpose">Our Purpose</a>
+      <a href="#what-we-route">What We Route</a>
+      <a href="#try-scanner">Test AI Scanner</a>
+      <a href="#partner">RWAs & NGOs</a>
+    </div>
+    <div style="display: flex; gap: 12px; align-items: center;">
+      <button class="btn btn-forest" style="padding: 10px 18px; font-size: 14px;" onclick="openModal('Schedule a Surplus Pickup')">Donate Surplus</button>
+      <button class="mobile-toggle" onclick="document.getElementById('navMenu').classList.toggle('open')">☰</button>
+    </div>
+  </nav>
+
+  <!-- Split Editorial Hero -->
+  <header class="hero">
+    <div>
+      <span class="eyebrow">Delhi-NCR Circular Logistics Initiative</span>
+      <h1>Good clothes and books belong in <em>classrooms</em>, not landfills.</h1>
+      <p class="hero-lead">Uptera bridges the gap between Delhi-NCR households with usable surplus and verified neighborhood NGOs—using Vision AI to verify item condition and cluster low-emission pickups.</p>
+      <div class="hero-actions">
+        <button class="btn btn-forest" onclick="openModal('Schedule a Doorstep Pickup')">Schedule a Pickup</button>
+        <a href="#crisis" class="btn btn-outline">See Why It Matters</a>
+      </div>
+      <div class="hero-footnote">
+        Built in Delhi-NCR to stop reusable textiles and textbooks from ending up in Ghazipur, Bhalswa, and Okhla dump sites.
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=1000&q=80" alt="Community volunteers sorting neatly folded donated clothes" class="hero-main-img">
+      <div class="floating-caption">
+        <strong>Hyperlocal NGO Matching</strong>
+        <span>Every bag is pre-checked for quality and routed to a vetted charity within 5–10 km of your society.</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dark Landfill Reality & Data Band -->
+  <section class="reality-band" id="crisis">
+    <div class="reality-inner">
+      <div class="reality-grid">
+        <div class="reality-img-wrap">
+          <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=1000&q=80" alt="Overflowing urban landfill waste mountain">
+          <span class="img-credit">Urban landfill overload: Reusable goods mixed with municipal trash</span>
+        </div>
+        <div class="reality-copy">
+          <span class="eyebrow" style="color: #F4A261;">The Problem We Are Solving</span>
+          <h2>Delhi-NCR has a logistics gap, not a generosity gap.</h2>
+          <p>Every day, thousands of wearable jackets, school textbooks, and household goods get tossed into mixed garbage or sit unused in cupboards because residents don't know which local NGO actually needs them—or lack time to drop them off.</p>
+          <p>Once mixed into municipal waste streams, clean cotton and paper are contaminated forever, adding to Delhi’s towering landfills while grassroots shelters struggle to afford basic supplies.</p>
+        </div>
+      </div>
+
+      <div class="hard-numbers">
+        <div class="num-block">
+          <h3>11,300+ T</h3>
+          <p>Municipal solid waste generated daily across Delhi alone, straining overflowing dump sites.</p>
+        </div>
+        <div class="num-block">
+          <h3>~60%</h3>
+          <p>Of discarded household textiles and books are still in wearable or readable condition.</p>
+        </div>
+        <div class="num-block">
+          <h3>&lt; 8 km</h3>
+          <p>Average distance between a donating RWA and a verified community center needing those items.</p>
+        </div>
+        <div class="num-block">
+          <h3>₹0 Cost</h3>
+          <p>To households and vetted NGOs—powered by clustered neighborhood route optimization.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Purpose & Mission Section -->
+  <section class="section" id="purpose">
+    <div class="purpose-grid">
+      <div class="purpose-sticky">
+        <span class="eyebrow">Our Purpose</span>
+        <h2>Why Uptera Exists</h2>
+        <p>Traditional charity drives often fail because NGOs receive bags of torn, unusable items they must pay to dispose of, while donors never know if their items actually helped anyone.</p>
+        <p>Uptera fixes both sides with simple, transparent technology.</p>
+        <button class="btn btn-forest" onclick="openModal('Partner With Uptera')">Join the Mission</button>
+      </div>
+
+      <div class="pillar-list">
+        <div class="pillar-item">
+          <div class="pillar-num">01</div>
+          <div>
+            <h3>Dignity-First Donations</h3>
+            <p>Our Vision AI screens photos before pickup so partner NGOs only receive clean, intact, weather-appropriate clothes and complete books—never discarded junk.</p>
+          </div>
+        </div>
+        <div class="pillar-item">
+          <div class="pillar-num">02</div>
+          <div>
+            <h3>Hyperlocal Route Clustering</h3>
+            <p>Instead of single-item trips across NCR traffic, Uptera batches pickups by colony and RWA—cutting transport costs and carbon emissions per kilogram diverted.</p>
+          </div>
+        </div>
+        <div class="pillar-item">
+          <div class="pillar-num">03</div>
+          <div>
+            <h3>End-to-End Accountability</h3>
+            <p>Donors receive clear confirmation when their items reach the matched NGO, turning one-time decluttering into a measurable neighborhood habit.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visual Photo Gallery of What We Divert -->
+  <section class="divert-section" id="what-we-route">
+    <div class="divert-inner">
+      <div class="divert-header">
+        <div>
+          <span class="eyebrow">Accepted Surplus</span>
+          <h2>Three Categories Making Immediate Impact</h2>
+        </div>
+        <p style="color: var(--ink-muted); max-width: 420px; font-size: 15px;">High-demand essentials that local shelters and learning centers request every week.</p>
+      </div>
+
+      <div class="photo-cards">
+        <div class="photo-card">
+          <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=crop&w=800&q=80" alt="Neatly stacked clean cotton and winter clothing">
+          <div class="photo-card-body">
+            <span class="tag-pill">Textiles & Winter Wear</span>
+            <h3>Clean Everyday & Warm Clothes</h3>
+            <p>Jackets, sweaters, children’s wear, and everyday cottons routed directly to migrant worker shelters and family welfare centers.</p>
+          </div>
+        </div>
+
+        <div class="photo-card">
+          <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&q=80" alt="Stack of educational textbooks and storybooks">
+          <div class="photo-card-body">
+            <span class="tag-pill">Education & Literacy</span>
+            <h3>NCERT Textbooks & Storybooks</h3>
+            <p>Academic guides, novels, stationery, and school backpacks matched with community learning centers across Delhi, Noida, and Gurugram.</p>
+          </div>
+        </div>
+
+        <div class="photo-card">
+          <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=800&q=80" alt="Reusable household essentials and kitchenware">
+          <div class="photo-card-body">
+            <span class="tag-pill">Daily Essentials</span>
+            <h3>Blankets, Bags & Home Basics</h3>
+            <p>Intact blankets, steel utensils, and working small appliances that help low-income households set up safe, functional homes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive AI Scanner (With Real File Upload Support) -->
+  <section class="section" id="try-scanner">
+    <div style="text-align: center; max-width: 660px; margin: 0 auto 44px;">
+      <span class="eyebrow">Live Prototype</span>
+      <h2 style="font-size: clamp(28px, 4vw, 38px); margin-bottom: 12px;">Test How Uptera Screens & Routes Items</h2>
+      <p style="color: var(--ink-muted);">Upload a photo of an item you want to donate—or click a sample category below—to see how our matching engine assigns it.</p>
+    </div>
+
+    <div class="scanner-box">
+      <div>
+        <div class="upload-zone" onclick="document.getElementById('photoInput').click()">
+          <img id="userPreviewImg" class="preview-thumb" alt="Uploaded surplus preview">
+          <p style="font-weight: 700; margin-bottom: 4px;" id="uploadLabel">+ Upload a Photo of Your Item</p>
+          <span style="font-size: 13px; color: var(--ink-muted);">Supports JPG, PNG, or phone camera photos (processed locally in your browser)</span>
+          <input type="file" id="photoInput" accept="image/*" style="display: none;" onchange="handlePhotoUpload(event)">
+        </div>
+
+        <div style="margin-top: 20px;">
+          <span style="font-size: 13px; font-weight: 700; color: var(--ink-muted);">Or test with a sample batch:</span>
+          <div class="preset-row">
+            <button class="preset-chip active" onclick="setSample('winter', this)">Winter Jackets (4 kg)</button>
+            <button class="preset-chip" onclick="setSample('books', this)">Class 9–12 Books (12 pcs)</button>
+            <button class="preset-chip" onclick="setSample('blankets', this)">Cotton Blankets (3 pcs)</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-sheet">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <span style="font-size: 12px; font-weight: 800; color: var(--forest); text-transform: uppercase;">AI Routing Output</span>
+          <span style="font-size: 12px; background: #E6F0EA; color: var(--forest); padding: 3px 9px; border-radius: 4px; font-weight: 700;" id="resStatus">Verified Usable</span>
+        </div>
+        <div class="result-line">
+          <span>Detected Item</span>
+          <strong id="resItem">Winter Jackets & Fleece Wear</strong>
+        </div>
+        <div class="result-line">
+          <span>Condition Check</span>
+          <strong id="resCond">Intact • Ready for Direct Reuse</strong>
+        </div>
+        <div class="result-line">
+          <span>Landfill & Carbon Saved</span>
+          <strong id="resImpact">4.0 kg Waste • ~6.8 kg CO₂e</strong>
+        </div>
+        <div class="result-line">
+          <span>Matched NGO Hub</span>
+          <strong id="resNgo">Safdarjung Shelter Network (4.5 km)</strong>
+        </div>
+        <div style="margin-top: 20px;">
+          <button class="btn btn-forest" style="width: 100%;" onclick="openModal('Request Pickup for Scanned Item')">Book Pickup for This Batch</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pilot Economics & Numbers -->
+  <section class="section" style="padding-top: 0;">
+    <div class="pilot-box">
+      <div>
+        <span class="eyebrow" style="color: #F4A261;">Lean Pilot Model</span>
+        <h2>Built for Real-World Execution, Not Slide Decks</h2>
+        <p>Launching on a lean ₹5,000 community pilot budget, Uptera proves that hyperlocal RWA collection drives and smart batching can divert over a ton of reusable goods without expensive warehouse overhead.</p>
+        <button class="btn" style="background: var(--white); color: var(--forest);" onclick="openModal('Host an RWA Drive')">Host a Drive in Your Society</button>
+      </div>
+
+      <div class="pilot-metrics">
+        <div class="p-stat">
+          <strong>1,200+ kg</strong>
+          <span>Pilot landfill diversion target across Delhi-NCR</span>
+        </div>
+        <div class="p-stat">
+          <strong>₹20,000+</strong>
+          <span>Estimated reuse value delivered to local families</span>
+        </div>
+        <div class="p-stat">
+          <strong>₹4.1 / kg</strong>
+          <span>Ultra-low logistics cost via clustered RWA routes</span>
+        </div>
+        <div class="p-stat">
+          <strong>100%</strong>
+          <span>Verified NGOs with active item-level demand</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RWA & NGO Partnership -->
+  <section class="section" id="partner" style="padding-top: 20px;">
+    <div style="text-align: center; max-width: 640px; margin: 0 auto 44px;">
+      <span class="eyebrow">Get Involved</span>
+      <h2 style="font-size: clamp(28px, 4vw, 38px);">Partner With Uptera</h2>
+    </div>
+
+    <div class="partner-cards">
+      <div class="p-card">
+        <h3>For Households & RWAs</h3>
+        <p>Turn weekend decluttering or society festivals into a verified zero-waste collection drive.</p>
+        <ul>
+          <li>✓ Doorstep or society gate pickup scheduling</li>
+          <li>✓ Pre-screening via WhatsApp or web photo upload</li>
+          <li>✓ Transparent weight-diverted report for your RWA</li>
+        </ul>
+        <button class="btn btn-forest" onclick="openModal('Register Household / RWA')">Schedule a Pickup</button>
+      </div>
+
+      <div class="p-card">
+        <h3>For Grassroots NGOs</h3>
+        <p>Receive pre-sorted, clean essentials matched strictly to the age groups and quantities you serve.</p>
+        <ul>
+          <li>✓ Zero unusable waste or sorting burden</li>
+          <li>✓ Specify exact needs (textbooks, winter wear, blankets)</li>
+          <li>✓ Direct scheduled delivery across Delhi-NCR</li>
+        </ul>
+        <button class="btn btn-outline" onclick="openModal('NGO Partner Application')">Join as an NGO Partner</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <a href="#" class="logo" style="color: var(--white); margin-bottom: 10px;">Uptera<span class="logo-dot"></span></a>
+        <p style="max-width: 340px; font-size: 14px;">Diverting Delhi-NCR’s usable household surplus from overflowing landfills into the hands of verified local communities.</p>
+      </div>
+      <div class="footer-links">
+        <div>
+          <strong style="color: var(--white); font-size: 14px;">Explore</strong>
+          <a href="#crisis">The Landfill Crisis</a>
+          <a href="#purpose">Our Purpose</a>
+          <a href="#what-we-route">Accepted Items</a>
+          <a href="#try-scanner">AI Scanner Demo</a>
+        </div>
+        <div>
+          <strong style="color: var(--white); font-size: 14px;">Contact</strong>
+          <a href="mailto:hello.uptera@gmail.com">hello.uptera@gmail.com</a>
+          <a href="https://wa.me/91XXXXXXXXXX?text=Hi%20Uptera!%20I%20want%20to%20connect." target="_blank">WhatsApp Direct</a>
+          <a href="#" onclick="openModal('General Inquiry'); return false;">Partner Inquiry</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Uptera • Delhi-NCR, India</span>
+      <span>Zero-Waste Circular Logistics</span>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div class="modal-bg" id="modalBg">
+    <div class="modal-card">
+      <button onclick="closeModal()" style="position: absolute; top: 16px; right: 18px; background: none; border: none; font-size: 24px; cursor: pointer;">×</button>
+      <h3 id="mTitle" style="font-size: 24px; margin-bottom: 6px;">Schedule a Surplus Pickup</h3>
+      <p style="font-size: 14px; color: var(--ink-muted); margin-bottom: 16px;">Send your details directly to our Delhi-NCR routing team on WhatsApp.</p>
+      <form onsubmit="sendToWhatsApp(event)">
+        <label style="font-size: 13px; font-weight: 700;">Your Name / RWA / NGO</label>
+        <input type="text" id="fName" required placeholder="e.g., Rohan Verma / Saket Block-J RWA">
+
+        <label style="font-size: 13px; font-weight: 700;">Locality in Delhi-NCR</label>
+        <input type="text" id="fArea" required placeholder="e.g., Dwarka Sec-12, Indirapuram, Gurugram">
+
+        <label style="font-size: 13px; font-weight: 700;">Category</label>
+        <select id="fType">
+          <option>Donate Clothes / Books (Household)</option>
+          <option>Host an RWA Society Collection Drive</option>
+          <option>Onboard as a Verified NGO Partner</option>
+        </select>
+
+        <label style="font-size: 13px; font-weight: 700;">Approximate Items</label>
+        <textarea id="fNotes" rows="2" placeholder="e.g., 2 bags of winter clothes and 10 school books"></textarea>
+
+        <button type="submit" class="btn btn-forest" style="width: 100%; margin-top: 6px;">Continue on WhatsApp →</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/919217906713?text=Hi%20Uptera!%20I%20would%20like%20to%20donate%20or%20partner%20with%20you." target="_blank" class="wa-btn">
+    Chat on WhatsApp
+  </a>
+
+  <script>
+    const samples = {
+      winter: {
+        item: "Winter Jackets & Fleece Wear",
+        cond: "Intact • Ready for Direct Reuse",
+        impact: "4.0 kg Waste • ~6.8 kg CO₂e",
+        ngo: "Safdarjung Shelter Network (4.5 km)"
+      },
+      books: {
+        item: "NCERT Class 9–12 Textbooks (12 pcs)",
+        cond: "Complete Pages • High Demand",
+        impact: "5.2 kg Paper • ~7.5 kg CO₂e",
+        ngo: "Udaan Community Study Center (3.1 km)"
+      },
+      blankets: {
+        item: "Clean Cotton & Wool Blankets (3 pcs)",
+        cond: "Sanitized • Grade A Condition",
+        impact: "6.0 kg Textile • ~9.4 kg CO₂e",
+        ngo: "Noida Night Shelter Initiative (5.8 km)"
+      }
+    };
+
+    function setSample(key, el) {
+      document.querySelectorAll('.preset-chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('userPreviewImg').style.display = 'none';
+      document.getElementById('uploadLabel').textContent = '+ Upload a Photo of Your Item';
+
+      const d = samples[key];
+      document.getElementById('resStatus').textContent = 'Verified Usable';
+      document.getElementById('resItem').textContent = d.item;
+      document.getElementById('resCond').textContent = d.cond;
+      document.getElementById('resImpact').textContent = d.impact;
+      document.getElementById('resNgo').textContent = d.ngo;
+    }
+
+    function handlePhotoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const img = document.getElementById('userPreviewImg');
+        img.src = evt.target.result;
+        img.style.display = 'block';
+        document.getElementById('uploadLabel').textContent = 'Photo Loaded: ' + file.name;
+        document.getElementById('resStatus').textContent = 'Photo Screened';
+        document.getElementById('resItem').textContent = 'User Uploaded Surplus (' + file.name.slice(0, 18) + ')';
+        document.getElementById('resCond').textContent = 'Passed Visual Check • Clean & Intact';
+        document.getElementById('resImpact').textContent = '~3.5–5.0 kg Landfill Diverted';
+        document.getElementById('resNgo').textContent = 'Nearest Verified NCR Hub Assigned';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function openModal(title) {
+      document.getElementById('mTitle').textContent = title;
+      document.getElementById('modalBg').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('modalBg').classList.remove('open');
+    }
+
+    function sendToWhatsApp(e) {
+      e.preventDefault();
+      const phone = "919217906713"; // Replace with your 10-digit WhatsApp number prefixed by 91
+      const name = document.getElementById('fName').value;
+      const area = document.getElementById('fArea').value;
+      const type = document.getElementById('fType').value;
+      const notes = document.getElementById('fNotes').value;
+      const text = `Hi Uptera!%0A*Action:* ${encodeURIComponent(type)}%0A*Name:* ${encodeURIComponent(name)}%0A*Area:* ${encodeURIComponent(area)}%0A*Items:* ${encodeURIComponent(notes)}`;
+      window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+      closeModal();
+    }
+  </script>
+</body>
+</html>
