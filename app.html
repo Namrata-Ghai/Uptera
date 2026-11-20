@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uptera - Delhi-NCR Circular Logistics & Society Network</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f1f5f9; }
+        .hide { display: none !important; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #e2e8f0; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="text-slate-900 min-h-screen flex flex-col justify-between selection:bg-emerald-600 selection:text-white">
+
+    <!-- LOGIN & MULTI-ROLE ONBOARDING SCREEN -->
+    <div id="loginScreen" class="flex-1 flex flex-col justify-center items-center p-4 sm:p-6 max-w-xl mx-auto w-full my-auto">
+        <div class="bg-white p-8 sm:p-12 rounded-3xl shadow-2xl w-full border border-emerald-100 relative overflow-hidden">
+            <div class="absolute top-0 left-0 right-0 h-2.5 bg-gradient-to-r from-emerald-500 via-teal-600 to-emerald-700"></div>
+            
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-emerald-50 rounded-2xl mb-3 shadow-inner border border-emerald-100">
+                    <svg class="w-12 h-12 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-extrabold text-emerald-950 tracking-tight">UPTERA</h1>
+                <p class="text-emerald-700 text-xs font-bold tracking-widest uppercase mt-1">Delhi-NCR Circular Logistics & Society Network</p>
+            </div>
+
+            <form id="loginForm" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Full Name</label>
+                        <input type="text" id="userName" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none transition font-medium text-sm" placeholder="e.g. Aarav Sharma">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Email ID</label>
+                        <input type="email" id="userEmail" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none transition font-medium text-sm" placeholder="aarav@uptera.in">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Phone Number</label>
+                        <input type="tel" id="userPhone" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none transition font-medium text-sm" placeholder="+91 98765 43210">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">RWA Society / Locality</label>
+                        <select id="userSociety" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none transition font-medium text-sm">
+                            <option value="Mayur Vihar Phase 1">Mayur Vihar Phase 1, Delhi</option>
+                            <option value="Dwarka Sector 10">Dwarka Sector 10, Delhi</option>
+                            <option value="Noida Sector 62">Noida Sector 62, UP</option>
+                            <option value="Gurgaon DLF Phase 3">Gurgaon DLF Phase 3, Haryana</option>
+                            <option value="Vasant Kunj">Vasant Kunj, Delhi</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Ecosystem Role</label>
+                    <select id="userRole" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none transition font-medium text-sm">
+                        <option value="Donor">Donor (Resident)</option>
+                        <option value="NGO">NGO Partner (Distribution Hub)</option>
+                        <option value="Recycler">Recycler (E-Waste / Bulk Collector)</option>
+                        <option value="Upcycler">Upcycler / Artisan (Creator)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3.5 rounded-xl hover:bg-emerald-700 transition shadow-lg shadow-emerald-600/30 mt-6 text-sm tracking-wide">
+                    Enter Platform Workspace
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN APP WORKSPACE (HIDDEN UNTIL AUTHENTICATED) -->
+    <div id="appInterface" class="hide flex-1 flex flex-col max-w-md mx-auto w-full pb-28 relative shadow-2xl bg-slate-50 min-h-screen">
+        
+        <!-- TOP APP HEADER -->
+        <header class="bg-white px-6 py-4 border-b border-slate-100 flex justify-between items-center sticky top-0 z-30 shadow-xs">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center border border-emerald-100 text-emerald-600">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                </div>
+                <div>
+                    <h2 id="greetingText" class="text-sm font-extrabold text-slate-900 leading-tight">Good Morning</h2>
+                    <div class="flex items-center gap-1.5 mt-0.5">
+                        <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span id="headerSociety" class="text-[11px] text-slate-500 font-semibold">Society</span>
+                    </div>
+                </div>
+            </div>
+            <button onclick="logout()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold px-3 py-2 rounded-xl transition border border-slate-200">Switch User</button>
+        </header>
+
+        <!-- ================= TAB 1: DASHBOARD ================= -->
+        <main id="tabDashboard" class="p-4 space-y-4 flex-1">
+            
+            <!-- STATS CARDS GRID -->
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white p-4 rounded-2xl shadow-md relative overflow-hidden">
+                    <div class="absolute -right-4 -bottom-4 opacity-10 text-6xl">🪙</div>
+                    <p class="text-[11px] text-emerald-100 font-bold uppercase tracking-wider">Uptera Tokens</p>
+                    <h3 id="tokenCount" class="text-2xl font-extrabold mt-1">150 🪙</h3>
+                    <span class="text-[10px] bg-emerald-500/40 px-2 py-0.5 rounded-md mt-2 inline-block font-semibold">Eco Champion</span>
+                </div>
+                <div class="bg-gradient-to-br from-slate-800 to-slate-900 text-white p-4 rounded-2xl shadow-md relative overflow-hidden">
+                    <div class="absolute -right-4 -bottom-4 opacity-10 text-6xl">🌿</div>
+                    <p class="text-[11px] text-slate-300 font-bold uppercase tracking-wider">Carbon Saved</p>
+                    <h3 id="carbonCount" class="text-2xl font-extrabold mt-1">12.4 kg 🌿</h3>
+                    <span class="text-[10px] bg-slate-700 px-2 py-0.5 rounded-md mt-2 inline-block font-semibold">CO2 Reduced</span>
+                </div>
+            </div>
+
+            <!-- ACHIEVEMENTS & BADGES -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-xs">
+                <h4 class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider mb-2.5">Earned Badges & Milestones</h4>
+                <div class="flex gap-2 flex-wrap">
+                    <span class="bg-amber-50 text-amber-700 border border-amber-200 text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-xs">⭐ Eco Starter</span>
+                    <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-xs">🌱 Society Saver</span>
+                    <span class="bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-xs">♻️ Zero Waste Pro</span>
+                    <span class="bg-purple-50 text-purple-700 border border-purple-200 text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-xs">⚡ Delhi-NCR Star</span>
+                </div>
+            </div>
+
+            <!-- ROLE ACTION HERO BANNER -->
+            <div id="roleActionBox" class="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 p-4 rounded-2xl flex items-center justify-between shadow-xs">
+                <div>
+                    <h4 id="roleBannerTitle" class="text-xs font-extrabold text-emerald-950 uppercase tracking-wider">Have items to donate?</h4>
+                    <p class="text-xs text-emerald-700 mt-0.5 font-medium">Scan clothing or books for instant society pickup.</p>
+                </div>
+                <button onclick="switchTab('scan')" class="bg-emerald-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow hover:bg-emerald-700 transition whitespace-nowrap ml-2">Open Scanner</button>
+            </div>
+
+            <!-- LIVE COMMUNITY FEED CONTROLS -->
+            <div class="flex justify-between items-center mt-3 px-1">
+                <h3 class="font-extrabold text-slate-900 text-sm tracking-tight">Live Feed in Your Society</h3>
+                <span class="text-xs text-emerald-600 font-bold cursor-pointer hover:underline">Filter Zone</span>
+            </div>
+
+            <!-- LIVE COMMUNITY FEED LIST -->
+            <div id="localFeedList" class="space-y-3">
+                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-xs flex gap-3.5 items-center transition hover:shadow-md">
+                    <div class="w-14 h-14 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center justify-center text-2xl shrink-0">👕</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-sm font-bold text-slate-900 truncate">Winter Jackets (x3)</h4>
+                            <span class="text-[10px] bg-blue-50 text-blue-700 font-bold px-2 py-0.5 rounded-md border border-blue-100 shrink-0">Clothes</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-0.5 truncate">Mayur Vihar Phase 1 • Good Condition</p>
+                        <div class="flex items-center gap-2 mt-2">
+                            <span class="text-[10px] bg-amber-50 text-amber-700 font-bold px-2 py-0.5 rounded-md border border-amber-100">Pending Pickup</span>
+                            <span class="text-[10px] text-slate-400 font-medium">2 hours ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-xs flex gap-3.5 items-center transition hover:shadow-md">
+                    <div class="w-14 h-14 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center justify-center text-2xl shrink-0">📚</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-sm font-bold text-slate-900 truncate">Class 12 NCERT Textbooks</h4>
+                            <span class="text-[10px] bg-purple-50 text-purple-700 font-bold px-2 py-0.5 rounded-md border border-purple-100 shrink-0">Books</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-0.5 truncate">Mayur Vihar Phase 1 • Like New</p>
+                        <div class="flex items-center gap-2 mt-2">
+                            <span class="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-md border border-emerald-100">Claimed by NGO</span>
+                            <span class="text-[10px] text-slate-400 font-medium">Yesterday</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-xs flex gap-3.5 items-center transition hover:shadow-md">
+                    <div class="w-14 h-14 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center justify-center text-2xl shrink-0">📱</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-sm font-bold text-slate-900 truncate">Old Working Smartphones (x2)</h4>
+                            <span class="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-md border border-emerald-100 shrink-0">E-Waste</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-0.5 truncate">Mayur Vihar Phase 1 • Recyclable</p>
+                        <div class="flex items-center gap-2 mt-2">
+                            <span class="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-md border border-emerald-100">Scheduled for Pickup</span>
+                            <span class="text-[10px] text-slate-400 font-medium">3 days ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-xs flex gap-3.5 items-center transition hover:shadow-md">
+                    <div class="w-14 h-14 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center justify-center text-2xl shrink-0">🪑</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-sm font-bold text-slate-900 truncate">Wooden Study Desk & Chair</h4>
+                            <span class="text-[10px] bg-amber-50 text-amber-700 font-bold px-2 py-0.5 rounded-md border border-amber-100 shrink-0">Furniture</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-0.5 truncate">Mayur Vihar Phase 1 • Sturdy</p>
+                        <div class="flex items-center gap-2 mt-2">
+                            <span class="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-md border border-emerald-100">Verified by RWA</span>
+                            <span class="text-[10px] text-slate-400 font-medium">4 days ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- ================= TAB 2: SCAN & DONATE ================= -->
+        <main id="tabScan" class="hide p-4 space-y-4 flex-1">
+            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+                <div class="border-b border-slate-100 pb-3">
+                    <h3 class="font-extrabold text-slate-900 text-base">AI Item Scanner & Donate</h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Upload a photo to automatically categorize and schedule hyper-local society pickup.</p>
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Item Category</label>
+                    <select id="donationCategory" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm font-medium">
+                        <option>Reusable Clothes</option>
+                        <option>Academic Books & Stationery</option>
+                        <option>Electronics / E-Waste</option>
+                        <option>Upcycler Material (Glass/Fabric/Plastic)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Upload Photo</label>
+                    <input type="file" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-3 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 border border-slate-200 rounded-xl bg-slate-50">
+                </div>
+
+                <div class="bg-emerald-50/60 border border-emerald-200 p-4 rounded-2xl text-center space-y-1">
+                    <p class="text-xs font-bold text-emerald-900">Teachable Machine AI Inspector</p>
+                    <p class="text-[11px] text-emerald-700">Status: <span class="font-bold underline">Ready to inspect condition and assign carbon value</span></p>
+                </div>
+
+                <button onclick="submitDonation()" class="w-full bg-emerald-600 text-white font-bold py-3.5 rounded-xl hover:bg-emerald-700 transition shadow-lg shadow-emerald-600/20 text-sm">
+                    Submit Donation Request (+50 Tokens)
+                </button>
+            </div>
+        </main>
+
+        <!-- ================= TAB 3: PROFILE ================= -->
+        <main id="tabProfile" class="hide p-4 space-y-4 flex-1">
+            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm text-center space-y-4">
+                <div class="w-24 h-24 bg-gradient-to-br from-emerald-600 to-teal-700 text-white font-extrabold text-3xl rounded-3xl flex items-center justify-center mx-auto shadow-md" id="profileAvatar">
+                    AS
+                </div>
+                <div>
+                    <h3 id="profileName" class="font-extrabold text-slate-900 text-xl">Aarav Sharma</h3>
+                    <p id="profileRoleEmail" class="text-xs text-slate-500 font-semibold mt-0.5">Donor • aarav@uptera.in</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 pt-4 border-t border-slate-100">
+                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
+                        <p class="text-[11px] text-slate-400 font-bold uppercase tracking-wider">Total Donated</p>
+                        <p class="font-extrabold text-slate-900 text-lg mt-0.5">5 Items</p>
+                    </div>
+                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
+                        <p class="text-[11px] text-slate-400 font-bold uppercase tracking-wider">Uptera Wallet</p>
+                        <p class="font-extrabold text-emerald-600 text-lg mt-0.5">150 🪙</p>
+                    </div>
+                </div>
+
+                <div class="pt-2 text-left space-y-2">
+                    <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Account Settings</h4>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 flex justify-between items-center text-xs font-semibold text-slate-700">
+                        <span>Delhi-NCR Society Zone</span>
+                        <span class="text-emerald-600 font-bold" id="profileSocietyText">Mayur Vihar Phase 1</span>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 flex justify-between items-center text-xs font-semibold text-slate-700">
+                        <span>Notification Preferences</span>
+                        <span class="text-emerald-600 font-bold">Enabled</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- BOTTOM TAPABLE NAVIGATION BAR -->
+        <nav class="bg-white/95 backdrop-blur-md border-t border-slate-200 fixed bottom-0 left-0 right-0 max-w-md mx-auto flex justify-around py-3 px-6 shadow-xl z-40">
+            <button onclick="switchTab('dashboard')" id="navDashboard" class="flex flex-col items-center text-emerald-600 text-[11px] font-bold transition">
+                <span class="text-xl leading-none">🏠</span>
+                <span class="mt-1">Dashboard</span>
+            </button>
+            <button onclick="switchTab('scan')" id="navScan" class="flex flex-col items-center text-slate-400 text-[11px] font-semibold transition hover:text-emerald-600">
+                <span class="text-xl leading-none">📷</span>
+                <span class="mt-1">Scan & Donate</span>
+            </button>
+            <button onclick="switchTab('profile')" id="navProfile" class="flex flex-col items-center text-slate-400 text-[11px] font-semibold transition hover:text-emerald-600">
+                <span class="text-xl leading-none">👤</span>
+                <span class="mt-1">Profile</span>
+            </button>
+        </nav>
+
+    </div>
+
+    <!-- ROBUST JAVASCRIPT APP CONTROLLER -->
+    <script>
+        const loginScreen = document.getElementById('loginScreen');
+        const appInterface = document.getElementById('appInterface');
+        const loginForm = document.getElementById('loginForm');
+
+        const tabDashboard = document.getElementById('tabDashboard');
+        const tabScan = document.getElementById('tabScan');
+        const tabProfile = document.getElementById('tabProfile');
+
+        const navDashboard = document.getElementById('navDashboard');
+        const navScan = document.getElementById('navScan');
+        const navProfile = document.getElementById('navProfile');
+
+        // Check Local Storage on Startup
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedUser = localStorage.getItem('uptera_user_session');
+            if (savedUser) {
+                const user = JSON.parse(savedUser);
+                initializeUserDashboard(user);
+            }
+        });
+
+        // Handle Login Submission Safely
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('userName').value.trim();
+            const email = document.getElementById('userEmail').value.trim();
+            const phone = document.getElementById('userPhone').value.trim();
+            const society = document.getElementById('userSociety').value;
+            const role = document.getElementById('userRole').value;
+
+            if (!name || !email) {
+                alert('Please fill in your valid credentials.');
+                return;
+            }
+
+            const user = {
+                name: name,
+                email: email,
+                phone: phone,
+                society: society,
+                role: role,
+                tokens: 150,
+                carbonSaved: 12.4
+            };
+            
+            localStorage.setItem('uptera_user_session', JSON.stringify(user));
+            initializeUserDashboard(user);
+        });
+
+        function initializeUserDashboard(user) {
+            loginScreen.classList.add('hide');
+            appInterface.classList.remove('hide');
+
+            // Dynamic Time-based Greeting
+            const hour = new Date().getHours();
+            let greeting = "Good Morning";
+            if (hour >= 12 && hour < 17) greeting = "Good Afternoon";
+            else if (hour >= 17) greeting = "Good Evening";
+
+            document.getElementById('greetingText').innerText = `${greeting}, ${user.name.split(' ')[0]}`;
+            document.getElementById('headerSociety').innerText = user.society;
+            document.getElementById('profileName').innerText = user.name;
+            document.getElementById('profileRoleEmail').innerText = `${user.role} • ${user.email}`;
+            document.getElementById('profileSocietyText').innerText = user.society;
+            document.getElementById('profileAvatar').innerText = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+            
+            document.getElementById('tokenCount').innerText = `${user.tokens} 🪙`;
+            document.getElementById('carbonCount').innerText = `${user.carbonSaved} kg 🌿`;
+        }
+
+        function logout() {
+            localStorage.removeItem('uptera_user_session');
+            appInterface.classList.add('hide');
+            loginScreen.classList.remove('hide');
+            loginForm.reset();
+        }
+
+        // Tapable Bottom Navigation Tab Switcher
+        function switchTab(tab) {
+            tabDashboard.classList.add('hide');
+            tabScan.classList.add('hide');
+            tabProfile.classList.add('hide');
+
+            const inactiveClass = "flex flex-col items-center text-slate-400 text-[11px] font-semibold transition hover:text-emerald-600";
+            const activeClass = "flex flex-col items-center text-emerald-600 text-[11px] font-bold transition scale-105";
+
+            navDashboard.className = inactiveClass;
+            navScan.className = inactiveClass;
+            navProfile.className = inactiveClass;
+
+            if (tab === 'dashboard') {
+                tabDashboard.classList.remove('hide');
+                navDashboard.className = activeClass;
+            } else if (tab === 'scan') {
+                tabScan.classList.remove('hide');
+                navScan.className = activeClass;
+            } else if (tab === 'profile') {
+                tabProfile.classList.remove('hide');
+                navProfile.className = activeClass;
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function submitDonation() {
+            alert('Success! Your donation request has been broadcast to your RWA society coordinator. +50 Uptera Tokens added!');
+            switchTab('dashboard');
+        }
+    </script>
+</body>
+</html>
